@@ -13,20 +13,44 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-        sourceSets {
-            androidTest{
-                java.srcDir file('src/Test/java')
-            }
+//        debug {
+//            applicationIdSuffix ".debug"
+//        }
+//
+//        jnidebug {
+//
+//            // This copies the debuggable attribute and debug signing configurations.
+//            initWith debug
+//
+//            applicationIdSuffix ".jnidebug"
+//            jniDebuggable true
+//        }
+
+    }
+
+    productFlavors {
+        free {
+            applicationId "com.example.mohamed.builditbiggerapp.free"
+            versionName "1.0-free"
+            // this boolean can be accessed in java classes by using BuildConfig class
+            // and now you can identify if your app is the paid version or not
+            buildConfigField "boolean", "PAID_VERSION", "false"
+        }
+
+        paid {
+            applicationId "com.example.mohamed.builditbiggerapp.paid"
+            versionName "1.0-paid"
+            buildConfigField "boolean", "PAID_VERSION", "true"
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -35,9 +59,11 @@ dependencies {
     compile 'com.google.code.findbugs:jsr305:2.0.1'
     testCompile 'junit:junit:4.12'
     compile 'com.intuit.sdp:sdp-android:1.0.4'
-    compile 'com.google.android.gms:play-services-ads:11.0.4'
+    freeCompile 'com.google.android.gms:play-services-ads:11.0.4'
+    paidCompile 'com.google.android.gms:play-services-ads:11.0.4'
     compile 'com.google.http-client:google-http-client-android:1.22.0'
     compile 'com.google.api-client:google-api-client:1.22.0'
     compile project(path: ':jokebackend', configuration: 'android-endpoints')
     compile project(path: ':showjoke')
+    compile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
 }

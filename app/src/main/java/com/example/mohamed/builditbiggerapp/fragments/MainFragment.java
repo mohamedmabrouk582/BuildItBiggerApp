@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
+import com.example.mohamed.builditbiggerapp.BuildConfig;
 import com.example.mohamed.builditbiggerapp.R;
 import com.example.mohamed.builditbiggerapp.model.JokeAsyncTask;
 import com.example.mohamed.builditbiggerapp.presenter.MainViewPresenter;
@@ -31,6 +32,16 @@ public class MainFragment extends Fragment implements View.OnClickListener,MainV
     private AdView mAdView;
     private MainViewPresenter mainViewPresenter;
     private InterstitialAd mInterstitialAd;
+    private boolean paid;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        if(BuildConfig.PAID_VERSION) {
+            paid = true;
+        }
+    }
 
     @Nullable
     @Override
@@ -48,7 +59,9 @@ public class MainFragment extends Fragment implements View.OnClickListener,MainV
       mAdView=view.findViewById(R.id.adView);
       mButton.setOnClickListener(this);
       AdRequest adRequest=new  AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        if (!paid) {
+            mAdView.loadAd(adRequest);
+        }
     }
 
     private void InterstitialAd(){
@@ -72,7 +85,7 @@ public class MainFragment extends Fragment implements View.OnClickListener,MainV
 
     @Override
     public void TellJoke() {
-        if (mInterstitialAd.isLoaded()){
+        if (mInterstitialAd.isLoaded() && !paid){
             mInterstitialAd.show();
         }else {
          excuted();
