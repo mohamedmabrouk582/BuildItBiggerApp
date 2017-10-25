@@ -1,4 +1,4 @@
-package com.example.mohamed.builditbiggerapp.fragments;
+package com.example.mohamed.buildbiggerapp.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,10 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
-
-import com.example.mohamed.builditbiggerapp.BuildConfig;
 import com.example.mohamed.builditbiggerapp.R;
 import com.example.mohamed.builditbiggerapp.model.JokeAsyncTask;
 import com.example.mohamed.builditbiggerapp.presenter.MainViewPresenter;
@@ -32,6 +30,7 @@ public class MainFragment extends Fragment implements View.OnClickListener,MainV
     private AdView mAdView;
     private MainViewPresenter mainViewPresenter;
     private InterstitialAd mInterstitialAd;
+    private ProgressBar mProgressBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +54,7 @@ public class MainFragment extends Fragment implements View.OnClickListener,MainV
     private void initView() {
       mButton=view.findViewById(R.id.tell_joke);
       mAdView=view.findViewById(R.id.adView);
+        mProgressBar=view.findViewById(R.id.mProgressBar);
       mButton.setOnClickListener(this);
         AdRequest adRequest=new  AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -69,14 +69,23 @@ public class MainFragment extends Fragment implements View.OnClickListener,MainV
             @Override
             public void onAdClosed() {
                 super.onAdClosed();
+                  mainViewPresenter.showProgress();
                  excuted();
             }
-        });
+        }
+        );
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mainViewPresenter.hideProgress();
     }
 
     @Override
     public void onClick(View v) {
       mainViewPresenter.TellJoke();
+
     }
 
     @Override
@@ -84,8 +93,23 @@ public class MainFragment extends Fragment implements View.OnClickListener,MainV
         if (mInterstitialAd.isLoaded() ){
             mInterstitialAd.show();
         }else {
+          mainViewPresenter.showProgress();
          excuted();
         }
+    }
+
+    @Override
+    public void showProgress() {
+        mProgressBar.setVisibility(View.VISIBLE);
+        mButton.setEnabled(false);
+        mAdView.setEnabled(false);
+    }
+
+    @Override
+    public void hideProgress() {
+        mProgressBar.setVisibility(View.GONE);
+        mButton.setEnabled(true);
+        mAdView.setEnabled(true);
     }
 
     private void excuted(){

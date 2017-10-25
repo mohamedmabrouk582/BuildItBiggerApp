@@ -6,4 +6,6 @@ package com.example.mohamed.builditbiggerapp.presenter;
 
 public interface MainPresenter {
     void TellJoke();
+    void showProgress();
+    void hideProgress();
 }

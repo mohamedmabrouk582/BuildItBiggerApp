@@ -17,4 +17,15 @@ public class MainViewPresenter extends BasePresenter implements MainPresenter {
     public void TellJoke() {
         mainView.TellJoke();
     }
+
+    @Override
+    public void showProgress() {
+        mainView.showProgress();
+    }
+
+    @Override
+    public void hideProgress() {
+        mainView.hideProgress();
+
+    }
 }

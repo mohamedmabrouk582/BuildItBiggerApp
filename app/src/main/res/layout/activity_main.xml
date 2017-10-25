@@ -45,4 +45,14 @@
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-9388449991695593/9029301388"
         />
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/mProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tell_joke"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp" />
 </RelativeLayout>
