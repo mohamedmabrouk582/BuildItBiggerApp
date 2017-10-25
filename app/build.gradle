@@ -16,19 +16,11 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
-//        debug {
-//            applicationIdSuffix ".debug"
-//        }
-//
-//        jnidebug {
-//
-//            // This copies the debuggable attribute and debug signing configurations.
-//            initWith debug
-//
-//            applicationIdSuffix ".jnidebug"
-//            jniDebuggable true
-//        }
+        sourceSets {
+            androidTest{
+                java.srcDir file('src/test/java')
+            }
+        }
 
     }
 
@@ -36,8 +28,6 @@ android {
         free {
             applicationId "com.example.mohamed.builditbiggerapp.free"
             versionName "1.0-free"
-            // this boolean can be accessed in java classes by using BuildConfig class
-            // and now you can identify if your app is the paid version or not
             buildConfigField "boolean", "PAID_VERSION", "false"
         }
 
@@ -60,7 +50,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.intuit.sdp:sdp-android:1.0.4'
     freeCompile 'com.google.android.gms:play-services-ads:11.0.4'
-    paidCompile 'com.google.android.gms:play-services-ads:11.0.4'
+    compile 'com.google.android.gms:play-services-ads:11.0.4'
     compile 'com.google.http-client:google-http-client-android:1.22.0'
     compile 'com.google.api-client:google-api-client:1.22.0'
     compile project(path: ':jokebackend', configuration: 'android-endpoints')

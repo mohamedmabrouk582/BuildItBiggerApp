@@ -1,5 +1,6 @@
 package com.example.mohamed.builditbiggerapp.model;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -23,6 +24,7 @@ public class JokeAsyncTask extends AsyncTask<Context, Void, String> {
     private Context context;
     @Override
     protected String doInBackground(Context...params) {
+
         if(myApiService == null) {
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)

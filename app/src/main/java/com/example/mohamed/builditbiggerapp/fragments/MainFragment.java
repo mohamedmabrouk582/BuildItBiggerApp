@@ -32,15 +32,11 @@ public class MainFragment extends Fragment implements View.OnClickListener,MainV
     private AdView mAdView;
     private MainViewPresenter mainViewPresenter;
     private InterstitialAd mInterstitialAd;
-    private boolean paid;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        if(BuildConfig.PAID_VERSION) {
-            paid = true;
-        }
     }
 
     @Nullable
@@ -51,6 +47,8 @@ public class MainFragment extends Fragment implements View.OnClickListener,MainV
         MobileAds.initialize(getActivity(),"ca-app-pub-9388449991695593/9029301388");
         initView();
         InterstitialAd();
+
+
         return view;
     }
 
@@ -58,10 +56,8 @@ public class MainFragment extends Fragment implements View.OnClickListener,MainV
       mButton=view.findViewById(R.id.tell_joke);
       mAdView=view.findViewById(R.id.adView);
       mButton.setOnClickListener(this);
-      AdRequest adRequest=new  AdRequest.Builder().build();
-        if (!paid) {
-            mAdView.loadAd(adRequest);
-        }
+        AdRequest adRequest=new  AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     private void InterstitialAd(){
@@ -85,7 +81,7 @@ public class MainFragment extends Fragment implements View.OnClickListener,MainV
 
     @Override
     public void TellJoke() {
-        if (mInterstitialAd.isLoaded() && !paid){
+        if (mInterstitialAd.isLoaded() ){
             mInterstitialAd.show();
         }else {
          excuted();
